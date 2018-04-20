@@ -1,127 +1,115 @@
 package com.babich.datastructures.list;
 
-public class ArrayList<T> {
-
+public class ArrayList implements List {
     private static final int INITIAL_CAPACITY = 10;
-
-    private Object[] array;
     private int size;
+    private Object objectArray[];
 
+
+    public ArrayList(int capacity) {
+        this.objectArray = new Object [capacity];
+    }
     public ArrayList() {
         this(INITIAL_CAPACITY);
     }
 
-    public ArrayList(int capacity) {
-        array = new Object[capacity];
+    public void add(Object object) {
+        add(object, size);
     }
 
-    // adds given element at the end
-    public void add(Object value) {
-        add(value, size);
+    public void add(Object object, int index) {
+        if (size == objectArray.length) {
+            resize();
+        }
+        for (int i = size(); i > index; i--) {
+            objectArray[i] = objectArray[i-1];
+        }
+        objectArray[index] = object;
+        size++;
     }
 
-    private void growCapacity() {
-        Object[] newArray = new Object[(int) (array.length * 1.5)];
-        for (int i = 0; i < 0; i++) {
-            newArray[i] = array[i];
+    public Object remove(int index) {
+        validateIndex(index);
+        Object removeElement = objectArray[index];
+        for (int i = index; i < size - 1; i++) {
+            objectArray[i] = objectArray[i + 1];
         }
-        array = newArray;
+        size--;
+        return removeElement;
+
     }
 
-    // we can add value by index between [0, size]
-    // otherwise throw new IndexOutOfBoundsException
-    public void add(Object value, int index) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Index should be between 0 and " + size + "(inclusive), but was : " + index);
-            add(0, size);
-        }
+    public Object get(int index) {
+        validateIndex(index);
+        return objectArray[index];
+    }
+    public Object set(Object object, int index) {
+        validateIndex(index);
+        Object oldElement = objectArray[index];
+        objectArray[index] = object;
+        return oldElement;
+    }
 
-        // we can remove value by index between [0, size - 1]
-        public Object remove (int index){
-            validateIndex(index);
-            Object valueToRemove = array[index];
-            valueToRemove = null;
-            return (Object value) valueToRemove;
+    public void clear() {
+        for (int i = 0; i < size(); i++) {
+            objectArray[i] = null;
         }
+        size = 0;
+    }
 
-        // get element by index
-        public Object get (int index) {
-          validateIndex(index);
-          return Object array[index];
-        }
+    public int size() {
+        return size;
+    }
 
-        // set (update) available element by index
-        public Object set (T value, int index) {
-            validateIndex(index);
-            array[] index = (T) value;
-            return value;
-        }
+    public boolean isEmpty() {
+        return size != 0;
+    }
 
-        // [A, B, C] remove = 0
-        public Object clear ( int index){
-            for (int i = 0; i < size; i++)
-                elementValue[i] = null;
-            size = 0;
-        }
+    public boolean contains(Object object) {
+        return indexOf(object) != 0;
+    }
 
-        // [B (index = 0) , C (index = 1)]
-        public Object remove (int index){
-            checkIndex(index);
-        }
-
-        // void clear ();
-        public void clear() {
-           size = 0;
-        }
-
-        // int size ();
-        public int size() {
-            return size;
-        }
-
-        // boolean isEmpty ();
-        public boolean isEmpty() {
-           return size != 0;
-        }
-
-        // boolean contains (Object value);
-        public boolean contains(Object value){
-            return indexOf(value) != -1;
-        }
-
-        // int indexOf (Object value);
-        public int indexOf(Object value){
-            for (int i = 0; i < size; i++) ;
-            if (array[i].equals(value)) {
+    public int indexOf(Object object) {
+        for (int i = 0; i < size; i++) {
+            if (objectArray[i].equals(object)) {
                 return i;
             }
         }
-            return -1;
-        }
-
-        // int lastIndexOf (Object value);
-        public int indexOf(Object value) {
-            for (int i = 0; i < size; i++) {
-                if ((value == null && get(i) == null) ||
-                        (value != null && get(i).equals(value)))
-                    return i;
-            }
-            return -1;
-        }
-
-        // [A, B, C], String toString
-        public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for (int i = size - 1; i >= 0; i--) {
-            builder.append(array[i]).append(", ");
-        }
-        return builder.toString();
+        return -1;
     }
 
-        // validation
-        private void validateIndex(int index) {
+    public int lastIndexOf(Object object) {
+        for (int i = size - 1; i >= 0; i--) {
+            if (objectArray[i].equals(object)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    public void resize() {
+        Object temp[] = new Object [(int) (objectArray.length*1.5)];
+        for (int i = 0; i < size; i++) {
+            temp[i] = objectArray[i];
+        }
+        objectArray = temp;
+    }
+
+
+    @Override
+    public String toString() {
+        String stringOutput = "Array List object [";
+        for (int i = 0; i < size-1; i++) {
+            stringOutput += objectArray[i] + ", ";
+        }
+        stringOutput = stringOutput + objectArray[size() - 1] + "]";
+        return stringOutput;
+    }
+
+    private void validateIndex(int index) {
         if (index >= size || index < 0) {
-            throw new IndexOutOfBoundsException("Index should be between 0 and " + size + "(inclusive), but was : " + index);
+            throw new IndexOutOfBoundsException("Index should be between 0 and size, but is" + size);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.babich.datastructures.stack;
+package com.babich.datastructures.list;
 
 class Node {
     Node next;
