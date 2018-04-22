@@ -1,100 +1,154 @@
 package com.babich.datastructures.list;
 
-public class LinkedList implements List{
+public abstract class LinkedList implements List {
 
-    //add links to the first and last node
-    private LinkedList head;
-    private LinkedList tail;
+    private Node head;
+    private Node tail;
+    private int size;
 
-    //add element to the end of list
-    public void add(Object object) {
-        LinkedList node = new LinkedList(Object object);
+    public LinkedList() {
+    }
 
-        // if list is empty
-        if (head == null) {
-            head = node;
-            tail = node;
-            // if list is not empty,
+    public void add(Object value) {
+        Node newNode = new Node(value);
+        if (size == 0) {
+            head = newNode;
+            tail = newNode;
         } else {
-            tail.next = node;
-            tail = node;
+
+            if (size == 1) {
+                head.next = newNode;
+                newNode.prev = head;
+                tail = newNode;
+
+            } else {
+                tail.next = newNode;
+                newNode.prev = tail;
+                tail = newNode;
+            }
         }
         size++;
     }
 
-    //remove node from the list
-    public boolean remove(Object object) {
-        LinkedList previous = null;
-        LinkedList current = head;
+    public void add(Object value, int index) {
+        indexValidation(index);
+        Node newNode = new Node(value);
 
-        // 1) if the list is empty do nothing
-        // 2) if there is one element in the list then previous = null
-        // 3) if there are several elements:
-        //    - deleted element could be the first
-        //    - deleted element could be in the middle of list or in the end
+        if (size == 0) {
+            head = tail = newNode;
+        } else if (index == 0) {
+            newNode.next = head;
+            head.prev = newNode;
+            head = newNode;
+        } else if (index == size) {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        } else {
+            Node curNode = getNode(index);
 
-        while (current != null) {
-            if (current.value.equals(object)) {
-                // deleted node is in the middle or in the end
-                if (previous != null) {
-                    // Before:    Head -> 3 -> 5 -> null
-                    // After:     Head -> 3 ------> null
-                    previous.next = current.next;
-
-                    // if node is in the end, then change tail
-                    if (current.next == null) {
-                        tail = previous;
-                    }
-                } else {
-                    head = head.next;
-                    // if the list is empty
-                    if (head == null) {
-                        tail = null;
-                    }
-                }
-                size--;
-                return true;
-            }
-
-            previous = current;
-            current = current.next;
+            newNode.prev = curNode.prev;
+            newNode.next = curNode;
+            curNode.prev.next = newNode;
+            curNode.prev = newNode;
         }
-        return false;
+        size++;
+        }
+
+    public Object remove(int index) {
+        indexValidation(index);
+        Node curNode = getNode(index);
+        Object valueToRemove = curNode.value;
+
+        if (size == 1) {
+            head = tail = null;
+        } else if (index == 0) {
+            head = head.next;
+            head.prev = null;
+        } else if (index == size - 1) {
+            tail = tail.prev;
+            tail.next = null;
+        } else {
+            curNode.next.prev = curNode.prev;
+            curNode.prev.next = curNode.next;
+        }
+        size--;
+        return valueToRemove;
     }
 
-    // check every element of the list from the first to last, true if we find element, false if don't
-    public boolean contains(Object object) {
-        LinkedList current = head;
-        while (current != null) {
-            if (current.value.Equals(object)) {
-                return true;
-            }
-            current = current.next;
-        }
-        return false;
+    public Object getNode(int index) {
+        indexValidation(index);
+        return getNode(index).value;
     }
 
-    // list is empty if head and tail equals null
-    public void clear(Object object) {
-        head = null;
-        tail = null;
+    public Object set(Object value, int index) {
+        indexValidation(index);
+        Node curNode = getNode(index);
+        Object oldValue = curNode.value;
+        curNode.value = value;
+        return oldValue;
+    }
+
+    public void clear(){
         size = 0;
+        head = tail = null;
     }
 
-    //copy elements of list to the array (by indexes)
-    public void copy(Object[] array, int arrayIndex) {
-        LinkedList current = head;
-        while (current != null) {
-            array[arrayIndex++] = current.value;
-            current = current.next;
+    public int size(){
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public boolean contains(Object value) {
+        return indexOf(value) != -1;
+    }
+
+    public int indexOf(Object value) {
+        Node curHead = head;
+
+        for (int i = 0; i <= size - 1; i++) {
+            if (value.equals(curHead.value)) {
+                return i;
+            }
+            curHead = curHead.next;
+        }
+        return -1;
+    }
+
+    public int lastIndexOf(Object value) {
+        Node curNode = tail;
+        for (int i = size - 1; i >= 0; i--) {
+            if (curNode.value.equals(value)) {
+                return i;
+            }
+            curNode = curNode.prev;
+        }
+        return -1;
+    }
+
+    public String toString() {
+        Node cur = head;
+        String result = "[";
+
+        for (int i = 0; i <= size - 1; i++) {
+            if (i == size - 1) {
+                result += cur.value;
+            } else {
+                result += cur.value + ", ";
+                cur = cur.next;
+            }
+        }
+        result += "]";
+
+        return result;
+    }
+
+    private void indexValidation(int index) {
+        if (index >= size || index < 0) {
+            throw new IndexOutOfBoundsException("Index should be between 0 and size, but is" + size);
         }
     }
 }
-
-//
-//    private void validateIndex(int index) {
-//        if (index >= size || index < 0) {
-//            throw new IndexOutOfBoundsException("Index should be between 0 and size, but is" + size);
-//        }
-//    }
-//}

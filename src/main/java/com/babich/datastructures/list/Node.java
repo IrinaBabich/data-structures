@@ -1,6 +1,6 @@
 package com.babich.datastructures.list;
 
-class Node {
+public class Node {
     Node next;
     Object value;
 

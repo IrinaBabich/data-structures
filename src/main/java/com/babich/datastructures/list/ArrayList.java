@@ -95,8 +95,6 @@ public class ArrayList implements List {
         }
         objectArray = temp;
     }
-
-
     @Override
     public String toString() {
         String stringOutput = "Array List object [";
