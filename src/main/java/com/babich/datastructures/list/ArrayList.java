@@ -1,7 +1,7 @@
 package com.babich.datastructures.list;
 
 public class ArrayList implements List {
-    private static final int INITIAL_CAPACITY = 10;
+    private static final int INITIAL_CAPACITY = 5;
     private int size;
     private Object objectArray[];
 
@@ -62,7 +62,10 @@ public class ArrayList implements List {
     }
 
     public boolean isEmpty() {
-        return size != 0;
+        if (size == 0) {
+            return true;
+        }
+        return false;
     }
 
     public boolean contains(Object object) {

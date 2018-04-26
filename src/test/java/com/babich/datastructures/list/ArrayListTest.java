@@ -50,28 +50,28 @@ import static org.junit.Assert.*;
         }
 
         @Test
-        public void set() {
-            listWithFiveElements.set("A", 4);
+        public void testSet() {
+            Object updatedValue= listWithFiveElements.set("A", 4);
+            assertEquals("E", updatedValue);
             assertEquals("A", listWithFiveElements.get(4));
             assertEquals(4, listWithFiveElements.lastIndexOf("A"));
-            listWithFiveElements.set("A", 5);
-            listWithFiveElements.set("A", 1);
         }
+
         @Test
-        public void clear() {
+        public void testClear() {
             assertEquals(5, listWithFiveElements.size());
             listWithFiveElements.clear();
             }
         @Test
-        public void size() {
+        public void testSize() {
             assertEquals(5, listWithFiveElements.size());
-            assertEquals(0, listWithFiveElements.size());
+            assertEquals(0, listWithZeroElements.size());
             listWithFiveElements.add("A");
             assertEquals(1, listWithFiveElements.size());
         }
 
         @Test
-        public void indexOf() {
+        public void testIndexOf() {
             assertEquals(0, listWithFiveElements.indexOf("A"));
             assertEquals(1, listWithFiveElements.indexOf("B"));
             assertEquals(2, listWithFiveElements.indexOf("C"));
@@ -80,7 +80,7 @@ import static org.junit.Assert.*;
         }
 
         @Test
-        public void lastIndexOf() {
+        public void testLastIndexOf() {
             assertEquals(4, listWithFiveElements.lastIndexOf("E"));
             assertEquals(3, listWithFiveElements.lastIndexOf("D"));
             assertEquals(1, listWithFiveElements.lastIndexOf("B"));

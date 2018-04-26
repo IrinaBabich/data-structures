@@ -1,37 +1,22 @@
 package com.babich.datastructures.list;
 
-public abstract class LinkedList implements List {
+public class LinkedList implements List {
 
-    private Node head;
-    private Node tail;
-    private int size;
+    Node head;
+    Node tail;
+    int size;
 
-    public LinkedList() {
-    }
+   public Object get(int index){
+        validateIndex(index);
+        return getNode(index).value;
+   }
 
-    public void add(Object value) {
-        Node newNode = new Node(value);
-        if (size == 0) {
-            head = newNode;
-            tail = newNode;
-        } else {
-
-            if (size == 1) {
-                head.next = newNode;
-                newNode.prev = head;
-                tail = newNode;
-
-            } else {
-                tail.next = newNode;
-                newNode.prev = tail;
-                tail = newNode;
-            }
-        }
-        size++;
-    }
+   public void add(Object value) {
+        add(value, size);
+   }
 
     public void add(Object value, int index) {
-        indexValidation(index);
+        validateIndex(index);
         Node newNode = new Node(value);
 
         if (size == 0) {
@@ -45,6 +30,7 @@ public abstract class LinkedList implements List {
             newNode.prev = tail;
             tail = newNode;
         } else {
+
             Node curNode = getNode(index);
 
             newNode.prev = curNode.prev;
@@ -53,36 +39,35 @@ public abstract class LinkedList implements List {
             curNode.prev = newNode;
         }
         size++;
-        }
+    }
 
     public Object remove(int index) {
-        indexValidation(index);
-        Node curNode = getNode(index);
-        Object valueToRemove = curNode.value;
+        validateIndex(index);
+
+        Node curNode;
 
         if (size == 1) {
+            curNode = head;
             head = tail = null;
         } else if (index == 0) {
+            curNode = head;
             head = head.next;
             head.prev = null;
         } else if (index == size - 1) {
+            curNode = tail;
             tail = tail.prev;
             tail.next = null;
         } else {
+            curNode = getNode(index);
             curNode.next.prev = curNode.prev;
             curNode.prev.next = curNode.next;
         }
         size--;
-        return valueToRemove;
-    }
-
-    public Object getNode(int index) {
-        indexValidation(index);
-        return getNode(index).value;
+        return curNode.value;
     }
 
     public Object set(Object value, int index) {
-        indexValidation(index);
+        validateIndex(index);
         Node curNode = getNode(index);
         Object oldValue = curNode.value;
         curNode.value = value;
@@ -107,48 +92,63 @@ public abstract class LinkedList implements List {
     }
 
     public int indexOf(Object value) {
-        Node curHead = head;
+        Node current = head;
 
-        for (int i = 0; i <= size - 1; i++) {
-            if (value.equals(curHead.value)) {
+        for (int i = 0; i < size; i++) {
+            if (value.equals(current.value)) {
                 return i;
             }
-            curHead = curHead.next;
+            current = current.next;
         }
         return -1;
     }
 
     public int lastIndexOf(Object value) {
-        Node curNode = tail;
+        Node current = tail;
         for (int i = size - 1; i >= 0; i--) {
-            if (curNode.value.equals(value)) {
+            if (current.value.equals(value)) {
                 return i;
             }
-            curNode = curNode.prev;
+            current = current.prev;
         }
         return -1;
     }
 
-    public String toString() {
-        Node cur = head;
-        String result = "[";
-
-        for (int i = 0; i <= size - 1; i++) {
-            if (i == size - 1) {
-                result += cur.value;
-            } else {
-                result += cur.value + ", ";
-                cur = cur.next;
+    private Node getNode(int index) {
+        Node curNode;
+        if (index >= size / 2) {
+            curNode = tail;
+            for (int i = size; i > index + 1; i--) {
+                curNode = curNode.prev;
+            }
+        } else {
+            curNode = head;
+            for (int i = 0; i < index; i++) {
+                curNode = curNode.next;
             }
         }
-        result += "]";
 
-        return result;
+        return curNode;
     }
 
-    private void indexValidation(int index) {
+        private void validateIndex(int index) {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("Index should be between 0 and size, but is" + size);
         }
     }
+
+    public String toString() {
+        Node newNode = head;
+        String result = "";
+        if (size > 0) {
+            for (int i = 0; i < size - 1; i++) {
+                result += newNode.value + ", ";
+                newNode = newNode.next;
+            }
+            result += newNode.value;
+        }
+        return "[" + result + "]";
+    }
+
+
 }

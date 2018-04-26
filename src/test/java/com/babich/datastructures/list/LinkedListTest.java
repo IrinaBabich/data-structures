@@ -2,12 +2,18 @@ package com.babich.datastructures.list;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+
 
 public class LinkedListTest {
 
     LinkedList linkedList;
     LinkedList linkedFiveList;
     int newSize;
+
 
     @Before
     public void before() {
@@ -37,7 +43,7 @@ public class LinkedListTest {
     }
 
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testAddByIndex() {
         linkedList.add("A");
         linkedList.add("B");
@@ -54,11 +60,10 @@ public class LinkedListTest {
         linkedList.add("GG", 6);
 
         assertEquals("C", linkedList.get(3));
-        assertEquals("F", linkedList.get(6));
-        linkedList.get(9);
-    }
+        assertEquals("GG", linkedList.get(6));
+       }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testRemove() {
         assertEquals(5, linkedFiveList.size);
         assertEquals("E", linkedFiveList.get(4));
@@ -66,26 +71,21 @@ public class LinkedListTest {
         assertEquals("D", linkedFiveList.get(3));
         assertEquals("A", linkedFiveList.remove(0));
         assertEquals("C", linkedFiveList.remove(1));
-        linkedFiveList.remove(4);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testGet() {
+    public void testRemoveByInvalidIndex(){
+        linkedFiveList.remove(5);
+    }
 
-        for (int i = 0; i <= linkedFiveList.size - 1; i++) {
-            Object[] objects = new Object[linkedFiveList.size];
-            objects[i] = linkedFiveList.get(i);
-            assertEquals(objects[i], linkedFiveList.get(i));
-        }
-        assertEquals("A", linkedFiveList.get(0));
+    @Test
+    public void testGet() {
+        assertEquals(5, linkedFiveList.size);
         assertEquals("B", linkedFiveList.get(1));
         assertEquals("C", linkedFiveList.get(2));
         assertEquals("D", linkedFiveList.get(3));
         assertEquals("E", linkedFiveList.get(4));
-        assertEquals("E", linkedFiveList.set("A", 4));
-        assertEquals("A", linkedFiveList.get(4));
-        assertEquals("E", linkedFiveList.get(5));
-    }
+       }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testSet() {

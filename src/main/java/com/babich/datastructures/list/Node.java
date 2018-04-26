@@ -1,10 +1,12 @@
 package com.babich.datastructures.list;
 
 public class Node {
-    Node next;
-    Object value;
+   public Node next;
+   public Node prev;
+   public Object value;
 
-    public Node(Object value) {
+   public Node(Object value){
         this.value = value;
     }
+
 }

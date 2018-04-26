@@ -1,5 +1,4 @@
 package com.babich.datastructures.stack;
-
 import java.util.NoSuchElementException;
 
 public class LinkedStack {
