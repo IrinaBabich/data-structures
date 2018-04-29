@@ -51,7 +51,7 @@ public class ArrayList implements List {
     }
 
     public void clear() {
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < size; i++) {
             objectArray[i] = null;
         }
         size = 0;

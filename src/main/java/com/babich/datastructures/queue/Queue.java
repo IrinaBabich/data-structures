@@ -1,7 +1,8 @@
 package com.babich.datastructures.queue;
 
 public interface Queue {
-    void enqueue (Object value);
+
+    void enqueue(Object value);
 
     Object dequeue();
 

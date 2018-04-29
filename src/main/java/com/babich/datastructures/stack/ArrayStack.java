@@ -2,11 +2,16 @@ package com.babich.datastructures.stack;
 import java.util.NoSuchElementException;
 
 public class ArrayStack{
+    private static final int INITIAL_CAPACITY = 5;
     int size;
     Object[] array;
 
-    public ArrayStack(int capacity){
-        array = new Object[capacity];
+    public ArrayStack() {
+        this(INITIAL_CAPACITY);
+    }
+
+    public ArrayStack(int capacity) {
+        this.array = new Object[capacity];
     }
 
     public void push(Object value) {
@@ -24,10 +29,10 @@ public class ArrayStack{
         array=newArray;
     }
 
-    public Object poll(){
+    public Object pop(){
         validateSize();
-        Object element=array[--size];
-        array[size]=null;
+        Object element=array[size - 1];
+        size--;
         return element;
     }
 
@@ -36,9 +41,24 @@ public class ArrayStack{
         return array[size - 1];
     }
 
+    int size() {
+        return size;
+
+    }
     public void validateSize() {
         if (size == 0) {
         throw new NoSuchElementException("Stack is empty");
         }
+    }
+
+    public String toString() {
+        String result = "[";
+        for (int i = 0; i < size; i++) {
+            result += array[i];
+            if (i != size - 1) {
+                result += ", ";
+            }
+        }
+        return result + "]";
     }
 }

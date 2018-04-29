@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
         @Before
         public void before() {
             listWithZeroElements = new ArrayList();
-
             listWithFiveElements = new ArrayList(5);
+
             char c = 'A';
             for (int i = 0; i < 5; i++) {
                 String value = String.valueOf(c);
