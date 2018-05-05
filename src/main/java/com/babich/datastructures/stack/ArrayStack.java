@@ -1,7 +1,7 @@
 package com.babich.datastructures.stack;
 import java.util.NoSuchElementException;
 
-public class ArrayStack{
+public class ArrayStack extends AbstractStack{
     private static final int INITIAL_CAPACITY = 5;
     int size;
     Object[] array;
@@ -41,7 +41,7 @@ public class ArrayStack{
         return array[size - 1];
     }
 
-    int size() {
+    public int size() {
         return size;
 
     }

@@ -1,19 +1,17 @@
 
 package com.babich.datastructures.stack;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.*;
+
+import org.junit.Before;
 import org.junit.Test;
 
-public class LinkedStackTest {
+import java.util.NoSuchElementException;
 
-    @Test
+    public class LinkedStackTest extends AbstractStackTest {
 
-    public void testPushAndPop() {
-        LinkedStack stack = new LinkedStack();
-        stack.push(40);
-        stack.push(60);
-        stack.push(150);
-        assertEquals("150 60 40", stack.toString());
-        assertEquals(150, stack.pop());
-        assertEquals("60 40", stack.toString());
+        public LinkedStack getStack() {
+            return new LinkedStack();
+        }
     }
-}
