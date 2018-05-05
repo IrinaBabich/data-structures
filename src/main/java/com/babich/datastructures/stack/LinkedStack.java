@@ -3,7 +3,7 @@ import java.util.NoSuchElementException;
 
 public class LinkedStack {
     int size;
-    Node head;
+    Node tail;
 
 
     public void push(Object value) {
@@ -18,7 +18,7 @@ public class LinkedStack {
     }
 
     private Node getLastNode() {
-        Node temp = head;
+        Node temp = tail;
         while (temp.next != null) {
             temp = temp.next;
         }
@@ -27,7 +27,7 @@ public class LinkedStack {
 
     public Object pop() {
         validateSize();
-        Node temp = head;
+        Node temp = tail;
         size--;
         for (int i = 0; i < size - 1; i++) {
             temp = temp.next;

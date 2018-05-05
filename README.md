@@ -1,2 +1,1 @@
-"#data-structures" 
-"# data-structures" 
+Implemented methods for basic data structures with tests.

@@ -1,28 +1,27 @@
 package com.babich.datastructures.list;
 
-public class ArrayList implements List {
+import java.util.StringJoiner;
+
+public class ArrayList extends AbstractList {
     private static final int INITIAL_CAPACITY = 5;
-    private int size;
     private Object objectArray[];
 
 
     public ArrayList(int capacity) {
-        this.objectArray = new Object [capacity];
+        this.objectArray = new Object[capacity];
     }
+
     public ArrayList() {
         this(INITIAL_CAPACITY);
     }
 
-    public void add(Object object) {
-        add(object, size);
-    }
-
     public void add(Object object, int index) {
+        validateAddIndex(index);
         if (size == objectArray.length) {
             resize();
         }
         for (int i = size(); i > index; i--) {
-            objectArray[i] = objectArray[i-1];
+            objectArray[i] = objectArray[i - 1];
         }
         objectArray[index] = object;
         size++;
@@ -43,6 +42,7 @@ public class ArrayList implements List {
         validateIndex(index);
         return objectArray[index];
     }
+
     public Object set(Object object, int index) {
         validateIndex(index);
         Object oldElement = objectArray[index];
@@ -69,7 +69,7 @@ public class ArrayList implements List {
     }
 
     public boolean contains(Object object) {
-        return indexOf(object) != 0;
+        return indexOf(object) != -1;
     }
 
     public int indexOf(Object object) {
@@ -92,25 +92,19 @@ public class ArrayList implements List {
 
 
     public void resize() {
-        Object temp[] = new Object [(int) (objectArray.length*1.5)];
+        Object temp[] = new Object[(int) (objectArray.length * 1.5)];
         for (int i = 0; i < size; i++) {
             temp[i] = objectArray[i];
         }
         objectArray = temp;
     }
-    @Override
+
     public String toString() {
         String stringOutput = "Array List object [";
-        for (int i = 0; i < size-1; i++) {
+        for (int i = 0; i < size - 1; i++) {
             stringOutput += objectArray[i] + ", ";
         }
         stringOutput = stringOutput + objectArray[size() - 1] + "]";
         return stringOutput;
-    }
-
-    private void validateIndex(int index) {
-        if (index >= size || index < 0) {
-            throw new IndexOutOfBoundsException("Index should be between 0 and size, but is" + size);
-        }
     }
 }

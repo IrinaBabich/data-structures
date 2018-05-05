@@ -1,7 +1,33 @@
-//package com.babich.datastructures.list;
-//
-//public class AbstractList {
-//    int size;
-//
-//
-//}
+package com.babich.datastructures.list;
+
+public abstract class AbstractList implements List{
+    int size;
+
+    public void add(Object object) {
+        add(object, size);
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public boolean contains(Object value) {
+        return indexOf(value) != -1;
+    }
+
+    void validateAddIndex(int index){
+        if (index < 0 || index > size){
+            throw new IndexOutOfBoundsException("Index should be between 0 and " + (size) + " inclusive");
+        }
+    }
+
+    void validateIndex(int index) {
+        if (index < 0 || index > size - 1) {
+            throw new IndexOutOfBoundsException("Index should be between 0 and " + (size - 1) + " inclusive");
+        }
+    }
+}

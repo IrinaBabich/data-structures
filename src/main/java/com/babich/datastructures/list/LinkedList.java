@@ -1,13 +1,14 @@
 package com.babich.datastructures.list;
 
-public class LinkedList implements List {
+import java.util.StringJoiner;
 
-    Node head;
-    Node tail;
-    int size;
+public class LinkedList extends AbstractList {
+
+    private Node head;
+    private Node tail;
 
    public Object get(int index){
-        validateIndex(index);
+        validateAddIndex(index);
         return getNode(index).value;
    }
 
@@ -16,7 +17,7 @@ public class LinkedList implements List {
    }
 
     public void add(Object value, int index) {
-        validateIndex(index);
+        validateAddIndex(index);
         Node newNode = new Node(value);
 
         if (size == 0) {
@@ -131,24 +132,14 @@ public class LinkedList implements List {
         return curNode;
     }
 
-        private void validateIndex(int index) {
-        if (index >= size || index < 0) {
-            throw new IndexOutOfBoundsException("Index should be between 0 and size, but is" + size);
-        }
-    }
-
     public String toString() {
-        Node newNode = head;
-        String result = "";
-        if (size > 0) {
-            for (int i = 0; i < size - 1; i++) {
-                result += newNode.value + ", ";
-                newNode = newNode.next;
-            }
-            result += newNode.value;
+        StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
+
+        Node current = head;
+        for (int i = 0; i < size; i++) {
+            stringJoiner.add(current.value.toString());
         }
-        return "[" + result + "]";
+
+        return stringJoiner.toString();
+        }
     }
-
-
-}
