@@ -1,5 +1,7 @@
 package com.babich.datastructures.queue;
 
+import java.util.StringJoiner;
+
 public class ArrayQueue implements Queue {
         private static final int DEFAULT_CAPACITY = 5;
 
@@ -44,8 +46,24 @@ public class ArrayQueue implements Queue {
             size--;
             return result;
         }
+
         public int size() {
             return size;
         }
+
+        private void growCapacity() {
+        Object[] newStack = new Object[array.length * 2];
+        System.arraycopy(array, 0, newStack, 0, size);
+        array = newStack;
+        }
+
+        public String toString() {
+        StringJoiner result = new StringJoiner(",", "[", "]");
+
+            for (int i = 0; i < size; i++) {
+            result.add(String.valueOf(array[i]));
+            }
+            return String.valueOf(result);
     }
+}
 

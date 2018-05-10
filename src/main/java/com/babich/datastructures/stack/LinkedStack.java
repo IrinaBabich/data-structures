@@ -38,4 +38,13 @@ public class LinkedStack extends AbstractStack{
     public int size() {
         return size;
     }
+
+    private static class Node {
+        private Node prev;
+        private Object value;
+
+        Node(Object value) {
+            this.value = value;
+        }
+    }
 }

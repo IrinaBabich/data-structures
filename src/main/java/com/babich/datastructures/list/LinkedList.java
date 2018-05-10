@@ -1,5 +1,4 @@
 package com.babich.datastructures.list;
-
 import java.util.StringJoiner;
 
 public class LinkedList extends AbstractList {
@@ -80,21 +79,11 @@ public class LinkedList extends AbstractList {
         head = tail = null;
     }
 
-    public int size(){
-        return size;
-    }
-
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    public boolean contains(Object value) {
-        return indexOf(value) != -1;
-    }
-
     public int indexOf(Object value) {
         Node current = head;
-
+        if (value == null) {
+            throw new NullPointerException("Value can not be null");
+        }
         for (int i = 0; i < size; i++) {
             if (value.equals(current.value)) {
                 return i;
@@ -106,6 +95,9 @@ public class LinkedList extends AbstractList {
 
     public int lastIndexOf(Object value) {
         Node current = tail;
+        if (value == null) {
+            throw new NullPointerException("Value can not be null");
+        }
         for (int i = size - 1; i >= 0; i--) {
             if (current.value.equals(value)) {
                 return i;
@@ -132,14 +124,29 @@ public class LinkedList extends AbstractList {
         return curNode;
     }
 
-    public String toString() {
-        StringJoiner stringJoiner = new StringJoiner(",", "[", "]");
-
+    public String toString () {
+        StringJoiner result = new StringJoiner(",", "[", "]");
         Node current = head;
         for (int i = 0; i < size; i++) {
-            stringJoiner.add(current.value.toString());
+            result.add(String.valueOf(current.value));
+            current = current.next;
+        }
+        return String.valueOf(result);
+    }
+
+    private static class Node {
+        private Node next;
+        private Node prev;
+        private Object value;
+
+        Node(Object value)
+        {
+            this.value = value;
         }
 
-        return stringJoiner.toString();
+        public Object getValue() {
+            return value;
         }
     }
+}
+

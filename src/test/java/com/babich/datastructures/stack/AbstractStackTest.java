@@ -16,9 +16,9 @@ public abstract class AbstractStackTest {
 
     @Before
     public void before() {
-        int size = 5;
+        int newSize = 5;
         char c = 'A';
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < newSize; i++) {
             String val = String.valueOf(c);
             stackWithFiveElements.push(val);
             c++;

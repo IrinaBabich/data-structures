@@ -17,6 +17,7 @@ public class LinkedQueue {
         }
         size++;
     }
+
     public Object dequeue() {
         Object result = head.value;
         head = head.next;
@@ -26,5 +27,14 @@ public class LinkedQueue {
 
     public int size() {
         return size;
+    }
+
+    private static class Node {
+        private Node next;
+        private Object value;
+
+        Node(Object value) {
+            this.value = value;
+        }
     }
 }

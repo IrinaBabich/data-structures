@@ -5,4 +5,5 @@ public interface Stack {
     Object peek();
     Object pop();
     int size();
+    String toString();
 }

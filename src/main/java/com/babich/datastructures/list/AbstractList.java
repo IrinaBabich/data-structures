@@ -3,8 +3,8 @@ package com.babich.datastructures.list;
 public abstract class AbstractList implements List{
     int size;
 
-    public void add(Object object) {
-        add(object, size);
+    public void add(Object value) {
+        add(value, size);
     }
 
     public int size() {

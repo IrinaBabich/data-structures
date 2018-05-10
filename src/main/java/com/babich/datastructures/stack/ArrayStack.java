@@ -1,7 +1,8 @@
 package com.babich.datastructures.stack;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
 
-public class ArrayStack extends AbstractStack{
+public class ArrayStack extends AbstractStack {
     private static final int INITIAL_CAPACITY = 5;
     int size;
     Object[] array;
@@ -22,43 +23,36 @@ public class ArrayStack extends AbstractStack{
         size++;
     }
 
-    private void resize(){
-        Object[] newArray = new Object[(int)(1.5 * array.length)];
+    private void resize() {
+        Object[] newArray = new Object[(int) (1.5 * array.length) + 1];
 
-        System.arraycopy(array,0,newArray,0,size);
-        array=newArray;
+        System.arraycopy(array, 0, newArray, 0, size);
+        array = newArray;
     }
 
-    public Object pop(){
+    public Object pop() {
         validateSize();
-        Object element=array[size - 1];
+        Object element = array[size - 1];
         size--;
         return element;
     }
 
-    public Object peek(){
+    public Object peek() {
         validateSize();
         return array[size - 1];
     }
 
-    public int size() {
-        return size;
-
-    }
     public void validateSize() {
         if (size == 0) {
-        throw new NoSuchElementException("Stack is empty");
+            throw new NoSuchElementException("Stack is empty");
         }
     }
 
     public String toString() {
-        String result = "[";
+        StringJoiner result = new StringJoiner(",", "[", "]");
         for (int i = 0; i < size; i++) {
-            result += array[i];
-            if (i != size - 1) {
-                result += ", ";
-            }
+            result.add(String.valueOf(array[i]));
         }
-        return result + "]";
+        return String.valueOf(result);
     }
 }

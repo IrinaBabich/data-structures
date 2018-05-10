@@ -7,4 +7,6 @@ public interface Queue {
     Object dequeue();
 
     int size();
+
+    String toString();
 }
