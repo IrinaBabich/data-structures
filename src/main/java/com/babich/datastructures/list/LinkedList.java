@@ -16,7 +16,14 @@ public class LinkedList extends AbstractList {
    }
 
     public void add(Object value, int index) {
-        validateAddIndex(index);
+        if (index > size || index < 0) {
+            throw new IndexOutOfBoundsException("\"index\" should be between 0 and " + size + "(inclusive), but was : " + index);
+        }
+
+        if (value == null) {
+            throw new NullPointerException("Value can not be null");
+        }
+
         Node newNode = new Node(value);
 
         if (size == 0) {
@@ -75,15 +82,21 @@ public class LinkedList extends AbstractList {
     }
 
     public void clear(){
-        size = 0;
+        Node current = head;
+        while (current != null) {
+            Node nextNode = current.next;
+            current.next = null;
+            current.prev = null;
+            current.value = null;
+            current = nextNode;
+        }
         head = tail = null;
+        size = 0;
     }
 
     public int indexOf(Object value) {
         Node current = head;
-        if (value == null) {
-            throw new NullPointerException("Value can not be null");
-        }
+
         for (int i = 0; i < size; i++) {
             if (value.equals(current.value)) {
                 return i;
@@ -139,12 +152,11 @@ public class LinkedList extends AbstractList {
         private Node prev;
         private Object value;
 
-        Node(Object value)
+        private Node(Object value)
         {
             this.value = value;
         }
-
-        public Object getValue() {
+        private Object getValue(){
             return value;
         }
     }

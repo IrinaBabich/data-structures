@@ -34,9 +34,7 @@ public class ArrayList extends AbstractList {
     public Object remove(int index) {
         validateIndex(index);
         Object removeElement = array[index];
-        for (int i = index; i < size - 1; i++) {
-            array[i] = array[i + 1];
-        }
+        System.arraycopy(array, index + 1, array, index, size - 1 - index);
         size--;
         return removeElement;
 
