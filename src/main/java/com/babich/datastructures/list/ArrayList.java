@@ -1,8 +1,9 @@
 package com.babich.datastructures.list;
 
+import java.util.Iterator;
 import java.util.StringJoiner;
 
-public class ArrayList extends AbstractList {
+public class ArrayList extends AbstractList implements Iterable{
     private static final int INITIAL_CAPACITY = 5;
     private Object[] array;
 
@@ -22,7 +23,7 @@ public class ArrayList extends AbstractList {
         }
         System.arraycopy(array, index, array, index + 1, size - index);
         array[index] = value;
-        size ++;
+        size++;
     }
 
     private void resize() {
@@ -90,15 +91,49 @@ public class ArrayList extends AbstractList {
                 }
             }
         }
-            return -1;
+        return -1;
     }
 
-    public String toString () {
+    public String toString() {
         StringJoiner result = new StringJoiner(",", "[", "]");
-            for (int i = 0; i < size; i++) {
-                result.add(String.valueOf(array[i]));
-            }
-            return String.valueOf(result);
+        for (int i = 0; i < size; i++) {
+            result.add(String.valueOf(array[i]));
         }
+        return String.valueOf(result);
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new ArrayListIterator();
+    }
+
+    private class ArrayListIterator implements Iterator{
+        private int currentIndex = 0;
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < array.length && array[currentIndex] != null;
+        }
+
+        @Override
+        public Object next() {
+            return array[currentIndex++];
+        }
+    }
+}
+
+class ArrayListTest {
+    public static void main(String[] args) {
+        ArrayList list = new ArrayList();
+        list.add("A");
+        list.add("B");
+        list.add("C");
+        list.add("D");
+        list.add("E");
+
+        for (Object o : list){
+            System.out.println(o);
+        }
+    }
 }
 

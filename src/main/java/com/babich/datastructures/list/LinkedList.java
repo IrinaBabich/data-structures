@@ -1,7 +1,8 @@
 package com.babich.datastructures.list;
+import java.util.Iterator;
 import java.util.StringJoiner;
 
-public class LinkedList extends AbstractList {
+public class LinkedList extends AbstractList implements Iterable{
 
     private Node head;
     private Node tail;
@@ -147,6 +148,28 @@ public class LinkedList extends AbstractList {
         return String.valueOf(result);
     }
 
+    @Override
+    public Iterator iterator() {
+        return new LinkedListIterator();
+    }
+
+    private class LinkedListIterator implements Iterator {
+      private Node current = head;
+
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public Object next() {
+            Object value = current.value;
+            current = current.next;
+            return value;
+        }
+    }
+
     private static class Node {
         private Node next;
         private Node prev;
@@ -156,9 +179,20 @@ public class LinkedList extends AbstractList {
         {
             this.value = value;
         }
-        private Object getValue(){
-            return value;
+   }
+}
+class LinkedListTest{
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+
+        list.add("A");
+        list.add("B");
+        list.add("C");
+        list.add("D");
+        list.add("E");
+
+        for (Object o : list){
+            System.out.println(o);
         }
     }
 }
-
